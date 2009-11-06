@@ -2,6 +2,8 @@ This plugin provides a `MailerComponent` extending the core `EmailComponent`. `M
 
 It also replaces the debug mode by writing to the `tmp/logs/error.log` file. Easy debugging with `tail -f` or Console rocks.
 
+Note : it requires PHP 5 because of `__call`. Components extend `Object` directly, so I couldnʼt use the overload features provided by `Overloadable`.
+
 ## Installation
 
 - Clone from github : in your plugin directory type
