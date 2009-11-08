@@ -44,8 +44,8 @@ Create a custom mailer in you `controllers/components` folder :
         /**
          * Defines common params for UserMailer emails
          */
-        function prepare() {
-            parent::prepare();
+        function _prepare() {
+            parent::_prepare();
             $this->sendAs = 'text';
         }
     }
@@ -74,7 +74,7 @@ The mailer automagically searches for a `views/elements/email/<format>/<mailer_n
 
 The magic `sendSomeMethod` first calls `prepare`, either the basic one in `MailerComponent` or your overriden version in `CustomMailerComponent`. It then calls `someMethod` in the mailer wich sets up the email, and finally calls `send`.
 
-While automagic stuff is fun, we sometimes need to override it. No problem. A `MailerComponent` method can call `setTemplate('another_folder/another_template')` :
+While automagic stuff is fun, we sometimes need to override it. No problem. A `MailerComponent` method can call `_setTemplate('another_folder/another_template')` :
 
     // controllers/components/user_mailer.php
 
@@ -82,7 +82,7 @@ While automagic stuff is fun, we sometimes need to override it. No problem. A `M
         if (empty($user['User']['email'])) {
             return false;
         }
-        $this->setTemplate('cookie_mailer/destroy_account'); // Yeah it's silly but we can do it
+        $this->_setTemplate('cookie_mailer/destroy_account'); // Yeah it's silly but we can do it
         $this->from = 'do-not-reply@example.com';
         $this->to = $user['User']['email'];
         $this->subject = "Welcome !";
@@ -97,7 +97,7 @@ If for some reason you want to use the automatic template manually, you can to :
         if (empty($user['User']['email'])) {
             return false;
         }
-        $this->setTemplate(); // Useless because send() does it for us, but we can do it here too
+        $this->_setTemplate(); // Useless because send() does it for us, but we can do it here too
         $this->from = 'do-not-reply@example.com';
         $this->to = $user['User']['email'];
         $this->subject = "Welcome !";

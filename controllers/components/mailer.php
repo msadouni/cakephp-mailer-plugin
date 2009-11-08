@@ -14,8 +14,10 @@ class MailerComponent extends EmailComponent {
  *
  * Calls EmailComponent::reset()
  * and set the delivery to 'debug' if we are in debug mode
+ *
+ * @access protected
  */
-    function prepare() {
+    function _prepare() {
         $this->reset();
         if (Configure::read('debug') > 0) {
             $this->delivery = 'debug';
@@ -27,8 +29,9 @@ class MailerComponent extends EmailComponent {
  *
  * Uses the mailer folder's name and method name unless specified
  * @param string $template the name of the template to use
+ * @access protected
  */
-    function setTemplate($template = null) {
+    function _setTemplate($template = null) {
         if (empty($template)) {
             $backtrace = debug_backtrace();
             if (empty($backtrace[1]['function'])) {
@@ -44,7 +47,7 @@ class MailerComponent extends EmailComponent {
             $template = Inflector::underscore($method);
         }
         $this->template = sprintf('%s%s%s',
-            $this->__templateFolder(),
+            $this->_templateFolder(),
             DS,
             $template
         );
@@ -54,8 +57,9 @@ class MailerComponent extends EmailComponent {
  * Returns the name of the template folder
  *
  * @return string the name of the template folder
+ * @access protected
  */
-    function __templateFolder() {
+    function _templateFolder() {
         return Inflector::underscore(str_replace(
             'Component', '', $this->toString()
         ));
@@ -75,10 +79,10 @@ class MailerComponent extends EmailComponent {
             trigger_error("MailerComponent::__call() - Method {$method} doesn't exist", E_USER_WARNING);
             return null;
         }
-        $this->prepare();
+        $this->_prepare();
         call_user_func_array(array($this, $method), $params);
         if (empty($this->template)) {
-            $this->setTemplate();
+            $this->_setTemplate();
         }
         return $this->send();
     }
@@ -87,6 +91,7 @@ class MailerComponent extends EmailComponent {
  * Writes the email to the error.log file
  *
  * @return true
+ * @access private
  */
     function __debug() {
         $nl = "\n";

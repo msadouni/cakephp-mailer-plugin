@@ -4,8 +4,8 @@ App::import('Plugin', 'Mailer.Mailer');
 
 class MailerTestComponent extends MailerComponent {
 
-    function prepare() {
-        parent::prepare();
+    function _prepare() {
+        parent::_prepare();
         $this->sendAs = 'text';
     }
 
@@ -23,14 +23,14 @@ class MailerTestComponent extends MailerComponent {
     }
 
     function withTemplate() {
-        $this->Controller->MailerTest->setTemplate('another_template');
+        $this->Controller->MailerTest->_setTemplate('another_template');
         $this->Controller->MailerTest->from = 'from@example.com';
         $this->Controller->MailerTest->to = 'to@example.com';
         $this->Controller->MailerTest->subject = "Welcome !";
     }
 
     function withAutoTemplate() {
-        $this->Controller->MailerTest->setTemplate();
+        $this->Controller->MailerTest->_setTemplate();
         $this->Controller->MailerTest->from = 'from@example.com';
         $this->Controller->MailerTest->to = 'to@example.com';
         $this->Controller->MailerTest->subject = "Welcome !";
@@ -59,7 +59,7 @@ class MailerComponentTest extends CakeTestCase {
 
     function testTemplateFolder() {
         $this->assertEqual(
-            $this->Controller->MailerTest->__templateFolder(),
+            $this->Controller->MailerTest->_templateFolder(),
             'mailer_test',
             "should be the underscored mailer class name : %s"
         );
@@ -69,7 +69,7 @@ class MailerComponentTest extends CakeTestCase {
         $debug = Configure::read('debug');
 
         Configure::write('debug', 1);
-        $this->Controller->MailerTest->prepare();
+        $this->Controller->MailerTest->_prepare();
         $this->assertEqual(
             $this->Controller->MailerTest->delivery,
             'debug',
@@ -77,7 +77,7 @@ class MailerComponentTest extends CakeTestCase {
 
         Configure::write('debug', 0);
         $this->Controller->MailerTest->delivery = 'mail';
-        $this->Controller->MailerTest->prepare();
+        $this->Controller->MailerTest->_prepare();
         $this->assertEqual(
             $this->Controller->MailerTest->delivery,
             'mail',
