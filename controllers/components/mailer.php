@@ -2,6 +2,17 @@
 
 App::import('Component', 'Email');
 
+if (!function_exists('lcfirst')) {
+    /**
+     * Returns a string with the first character of str lowercased
+     *
+     * @return string
+     */
+    function lcfirst($str) {
+        return (string)(strtolower(substr($str, 0, 1)).substr($str, 1));
+    }
+}
+
 /**
  * MailerComponent
  *
