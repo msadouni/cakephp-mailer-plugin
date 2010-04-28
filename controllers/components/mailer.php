@@ -104,7 +104,7 @@ class MailerComponent extends EmailComponent {
  * @return true
  * @access private
  */
-    function __debug() {
+    function _debug() {
         $nl = "\n";
         $header = implode($nl, $this->__header);
         $message = implode($nl, $this->__message);
@@ -117,7 +117,7 @@ class MailerComponent extends EmailComponent {
         }
         $fm .= sprintf('%s %s%s', 'To:', $this->to, $nl);
         $fm .= sprintf('%s %s%s', 'From:', $this->from, $nl);
-        $fm .= sprintf('%s %s%s', 'Subject:', $this->__encode($this->subject), $nl);
+        $fm .= sprintf('%s %s%s', 'Subject:', $this->_encode($this->subject), $nl);
         $fm .= sprintf('%s%3$s%3$s%s', 'Header:', $header, $nl);
         $fm .= sprintf('%s%3$s%3$s%s', 'Parameters:', $this->additionalParams, $nl);
         $fm .= sprintf('%s%3$s%3$s%s', 'Message:', $message, $nl);
